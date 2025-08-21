@@ -1,16 +1,11 @@
 server:
-  port: 8080
-
-spring:
-  application:
-    name: discovery-service
+  port: 8761
 
 eureka:
   client:
+    register-with-eureka: false
+    fetch-registry: false
     service-url:
       defaultZone: http://localhost:8761/eureka/
-    register-with-eureka: true    # API Gateway should register with Eureka
-    fetch-registry: true          # API Gateway should fetch registry from Eureka
   instance:
     hostname: localhost
-    prefer-ip-address: false      # Typically false when using hostname
