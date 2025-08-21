@@ -15,18 +15,10 @@ spring:
           uri: lb://auth-service
           predicates:
             - Path=/auth/**
-        - id: restaurant-service
-          uri: lb://restaurant-service
+        - id: membership-service
+          uri: lb://membership-service
           predicates:
-            - Path=/api/restaurants/**
-        - id: order-service
-          uri: lb://order-service
-          predicates:
-            - Path=/api/orders/**
-        - id: notification-service
-          uri: lb://notification-service
-          predicates:
-            - Path=/api/notifications/**
+            - Path=/api/membership/**
     config:
       name: api-gateway
 
