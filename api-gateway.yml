@@ -11,16 +11,42 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
+        # Service routes
         - id: auth-service
           uri: lb://auth-service
           predicates:
             - Path=/auth/**
+
         - id: membership-service
           uri: lb://membership-service
           predicates:
             - Path=/api/membership/**
-    config:
-      name: api-gateway
+
+        # H2 Console routes for each service
+        - id: auth-service-h2-console
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/h2-console/**
+          filters:
+            - RewritePath=/auth/h2-console(?<segment>/?.*), /h2-console$\{segment}
+
+        - id: membership-service-h2-console
+          uri: lb://membership-service
+          predicates:
+            - Path=/membership/h2-console/**
+          filters:
+            - RewritePath=/membership/h2-console(?<segment>/?.*), /h2-console$\{segment}
+
+        # Generic H2 console route (if you want a single entry point)
+        - id: h2-console-proxy
+          uri: lb://${serviceId}
+          predicates:
+            - Path=/{serviceId}/h2-console/**
+          filters:
+            - RewritePath=/(?<serviceId>[^/]+)/h2-console(?<segment>/?.*), /h2-console$\{segment}
+            - SetPath=/{serviceId}/h2-console{segment}
+  config:
+    name: api-gateway
 
 eureka:
   client:
@@ -29,7 +55,7 @@ eureka:
 
 jwt:
   secret: pX6r4kz3e2l9f5aD1cB8v7gN0jM5qW2yL4iH9oP3uK6tF1xZ0
-  
+
 management:
   endpoints:
     web:
@@ -39,5 +65,3 @@ management:
     metrics:
       export:
         enabled: true
-
- 
