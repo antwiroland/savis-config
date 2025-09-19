@@ -1,12 +1,12 @@
-# Membership Service
+# Transaction Service
 server:
-  port: 9002
+  port: 9007
 
 spring:
   application:
-    name: membership-service
+    name: transaction-service
   datasource:
-    url: jdbc:h2:mem:membershipdb
+    url: jdbc:h2:mem:transactiondb
     username: sa
     password: password
   h2:

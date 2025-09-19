@@ -1,12 +1,12 @@
-# Membership Service
+# Notification Service
 server:
-  port: 9002
+  port: 9004
 
 spring:
   application:
-    name: membership-service
+    name: notification-service
   datasource:
-    url: jdbc:h2:mem:membershipdb
+    url: jdbc:h2:mem:notificationdb
     username: sa
     password: password
   h2:

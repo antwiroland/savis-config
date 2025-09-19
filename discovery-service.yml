@@ -1,3 +1,4 @@
+# Discovery Service
 server:
   port: 8761
 spring:

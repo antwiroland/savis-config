@@ -1,3 +1,4 @@
+# API Gateway
 server:
   port: 8080
 
@@ -11,34 +12,89 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-        # Service routes
+        # === AUTH SERVICE ===
         - id: auth-service
           uri: lb://auth-service
           predicates:
             - Path=/auth/**
-
-        - id: membership-service
-          uri: lb://membership-service
-          predicates:
-            - Path=/api/membership/**
-
-        # H2 Console routes - FIXED CONFIGURATION
         - id: auth-h2-console
           uri: lb://auth-service
           predicates:
             - Path=/auth/h2-console/**
           filters:
-            - RewritePath=/auth/h2-console(?<segment>/?.*), /h2-console$\{segment}
+            - RewritePath=/auth/h2-console(?<segment>/?.*), /h2-console${segment}
 
+        # === MEMBERSHIP SERVICE ===
+        - id: membership-service
+          uri: lb://membership-service
+          predicates:
+            - Path=/api/membership/**
         - id: membership-h2-console
           uri: lb://membership-service
           predicates:
             - Path=/membership/h2-console/**
           filters:
-            - RewritePath=/membership/h2-console(?<segment>/?.*), /h2-console$\{segment}
+            - RewritePath=/membership/h2-console(?<segment>/?.*), /h2-console${segment}
 
-  config:
-    name: api-gateway
+        # === PAYMENT SERVICE ===
+        - id: payment-service
+          uri: lb://payment-service
+          predicates:
+            - Path=/api/payment/**
+        - id: payment-h2-console
+          uri: lb://payment-service
+          predicates:
+            - Path=/payment/h2-console/**
+          filters:
+            - RewritePath=/payment/h2-console(?<segment>/?.*), /h2-console${segment}
+
+        # === NOTIFICATION SERVICE ===
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/api/notification/**
+        - id: notification-h2-console
+          uri: lb://notification-service
+          predicates:
+            - Path=/notification/h2-console/**
+          filters:
+            - RewritePath=/notification/h2-console(?<segment>/?.*), /h2-console${segment}
+
+        # === GROUP SERVICE ===
+        - id: group-service
+          uri: lb://group-service
+          predicates:
+            - Path=/api/group/**
+        - id: group-h2-console
+          uri: lb://group-service
+          predicates:
+            - Path=/group/h2-console/**
+          filters:
+            - RewritePath=/group/h2-console(?<segment>/?.*), /h2-console${segment}
+
+        # === CYCLE PAYOUT ORCHESTRATION SERVICE ===
+        - id: cycle-payout-orchestration-service
+          uri: lb://cycle-payout-orchestration-service
+          predicates:
+            - Path=/api/cycle/**
+        - id: cycle-h2-console
+          uri: lb://cycle-payout-orchestration-service
+          predicates:
+            - Path=/cycle/h2-console/**
+          filters:
+            - RewritePath=/cycle/h2-console(?<segment>/?.*), /h2-console${segment}
+
+        # === TRANSACTION SERVICE ===
+        - id: transaction-service
+          uri: lb://transaction-service
+          predicates:
+            - Path=/api/transaction/**
+        - id: transaction-h2-console
+          uri: lb://transaction-service
+          predicates:
+            - Path=/transaction/h2-console/**
+          filters:
+            - RewritePath=/transaction/h2-console(?<segment>/?.*), /h2-console${segment}
 
 eureka:
   client:
@@ -46,21 +102,3 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
     fetch-registry: true
     register-with-eureka: true
-
-jwt:
-  secret: pX6r4kz3e2l9f5aD1cB8v7gN0jM5qW2yL4iH9oP3uK6tF1xZ0
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,prometheus,metrics
-  prometheus:
-    metrics:
-      export:
-        enabled: true
-
-logging:
-  level:
-    org.springframework.cloud.gateway: TRACE
-    reactor.netty.http.client: DEBUG

@@ -1,12 +1,12 @@
-# Membership Service
+# Group Service
 server:
-  port: 9002
+  port: 9005
 
 spring:
   application:
-    name: membership-service
+    name: group-service
   datasource:
-    url: jdbc:h2:mem:membershipdb
+    url: jdbc:h2:mem:groupdb
     username: sa
     password: password
   h2:
