@@ -20,7 +20,7 @@ spring:
 
 payment:
   momo:
-    base-url: https://sandbox.momodeveloper.mtn.com 
+    base-url: sandbox.momodeveloper.mtn.com 
     subscription-key: YOUR_SUBSCRIPTION_KEY             
     environment: sandbox                               
     api-user: YOUR_API_USER                             
