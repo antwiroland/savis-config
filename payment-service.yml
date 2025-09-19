@@ -17,3 +17,11 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: true
+
+payment:
+  momo:
+    base-url: https://sandbox.momodeveloper.mtn.com 
+    subscription-key: YOUR_SUBSCRIPTION_KEY             
+    environment: sandbox                               
+    api-user: YOUR_API_USER                             
+    api-key: YOUR_API_KEY                                

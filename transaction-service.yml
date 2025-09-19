@@ -17,3 +17,10 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: true
+
+services:
+  group-service:
+    url: localhost:8081
+
+  membership-service:
+    url: localhost:8081
